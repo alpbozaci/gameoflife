@@ -58,6 +58,7 @@ public class GameOfLife extends Application
         buttonGrp.getChildren().add(createNextButton());
         buttonGrp.getChildren().add(createStartButton());
         buttonGrp.getChildren().add(createStopButton());
+        buttonGrp.getChildren().add(createResetButton());
         borderPane.setBottom(buttonGrp);
 
         Scene scene = new Scene(borderPane, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -183,6 +184,23 @@ public class GameOfLife extends Application
         return button;
     }
 
+    private Button createResetButton()
+    {
+        Button button = new Button("reset");
+        button.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent event)
+            {
+                System.out.println("reset");
+                timeline.stop();
+                resetMatrix();
+            }
+        });
+
+        return button;
+    }
+
     private void calculateNextMatrix()
     {
         for (int y = 1; y < Y_MATRIX_Max - 1; y++)
@@ -190,6 +208,18 @@ public class GameOfLife extends Application
             for (int x = 1; x < X_MATRIX_MAX - 1; x++)
             {
                 GameOfLifeService.calculateNextState(matrix, x, y);
+            }
+        }
+        redrawMatrix();
+    }
+    
+    private void resetMatrix()
+    {
+        for (int y = 1; y < Y_MATRIX_Max - 1; y++)
+        {
+            for (int x = 1; x < X_MATRIX_MAX - 1; x++)
+            {
+                GameOfLifeService.reset(matrix, x, y);
             }
         }
         redrawMatrix();

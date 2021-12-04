@@ -58,4 +58,10 @@ public class GameOfLifeService
             }
         }
     }
+    
+    public static void reset(GameOfLifeItem[][] matrix, int x, int y)
+    {
+        GameOfLifeItem item = matrix[x][y];
+        item.setNextState(false);
+    }
 }
